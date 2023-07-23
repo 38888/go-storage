@@ -45,14 +45,15 @@ func Init(config Config) (storage.Storage, error) {
 			return
 		}
 
-		storage.Register(storage.Oss, o)
 	})
 	if initErr != nil {
 		return nil, initErr
 	}
 	return o, nil
 }
-
+func (o *oss) IsLocal() bool {
+	return false
+}
 func (o *oss) Put(key string, r io.Reader, dataLength int64) error {
 	key = storage.NormalizeKey(key)
 

@@ -14,4 +14,5 @@ type Storage interface {
 	Size(key string) (int64, error)
 	Delete(key string) error
 	Url(key string) string
+	IsLocal() bool
 }
