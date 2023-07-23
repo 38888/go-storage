@@ -3,17 +3,15 @@ package main
 import (
 	"bytes"
 	"github.com/38888/go-storage/local"
-	"github.com/38888/go-storage/storage"
 )
 
 func main() {
 	// 初始化文件存储系统
-	_, _ = local.Init(local.Config{
+	disk, _ := local.Init(local.Config{
 		RootDir: "./tests",
 		AppUrl:  "http://localhost:8888/tests",
 	})
 
-	disk, _ := storage.Disk(storage.Local)
 	// 保存文件
 	buf := bytes.NewBuffer([]byte{'A', 'B', 'C', 'D', 'E'})
 	disk.Put("local/accounts.txt", buf, int64(buf.Len()))
@@ -42,6 +40,4 @@ func main() {
 	// 获取文件URL
 	disk.Url("path/to/file.ext")
 
-	var customDisk storage.Storage
-	storage.Register("custom", customDisk)
 }
