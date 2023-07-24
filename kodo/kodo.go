@@ -51,13 +51,11 @@ func Init(config Config) (storage.Storage, error) {
 
 		k.formUploader = qiniuStorage.NewFormUploader(&cfg)
 		k.bucketManager = qiniuStorage.NewBucketManager(k.mac, &cfg)
-
+		storage.Register(storage.KoDo, k)
 	})
 	return k, nil
 }
-func (k *kodo) IsLocal() bool {
-	return false
-}
+
 func (k *kodo) Put(key string, r io.Reader, dataLength int64) error {
 	key = storage.NormalizeKey(key)
 

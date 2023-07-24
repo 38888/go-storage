@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"fmt"
 	"io"
 )
 
@@ -14,5 +15,21 @@ type Storage interface {
 	Size(key string) (int64, error)
 	Delete(key string) error
 	Url(key string) string
-	IsLocal() bool
+}
+
+var disks = make(map[DiskName]Storage)
+
+func Register(name DiskName, disk Storage) {
+	if disk == nil {
+		panic("storage: Register disk is nil")
+	}
+	disks[name] = disk
+}
+
+func Disk(name DiskName) (Storage, error) {
+	disk, exist := disks[name]
+	if !exist {
+		return nil, fmt.Errorf("storage: Unknown disk %q", name)
+	}
+	return disk, nil
 }

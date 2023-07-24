@@ -28,12 +28,10 @@ func Init(config Config) (storage.Storage, error) {
 		l = &local{
 			config: &config,
 		}
+		storage.Register(storage.Local, l)
 
 	})
 	return l, nil
-}
-func (l *local) IsLocal() bool {
-	return true
 }
 
 func (l *local) getPath(key string) string {

@@ -44,6 +44,7 @@ func Init(config Config) (storage.Storage, error) {
 		if initErr != nil {
 			return
 		}
+		storage.Register(storage.Oss, o)
 
 	})
 	if initErr != nil {
@@ -51,9 +52,7 @@ func Init(config Config) (storage.Storage, error) {
 	}
 	return o, nil
 }
-func (o *oss) IsLocal() bool {
-	return false
-}
+
 func (o *oss) Put(key string, r io.Reader, dataLength int64) error {
 	key = storage.NormalizeKey(key)
 
