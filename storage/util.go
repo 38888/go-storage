@@ -1,10 +1,10 @@
 package storage
 
 import (
-	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"io"
+	"mime/multipart"
 	"os"
 	"strings"
 )
@@ -47,7 +47,7 @@ func OpenAsReadOnly(key string) (*os.File, os.FileInfo, error) {
 
 	return fd, stat, nil
 }
-func GetFileMd5(f *bytes.Buffer) string {
+func GetFileMd5(f multipart.File) string {
 
 	md5h := md5.New()
 	io.Copy(md5h, f)
